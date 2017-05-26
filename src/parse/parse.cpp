@@ -41,7 +41,7 @@ std::unordered_map<uint64_t,BBlock> Parse::parse_file(std::string path) {
 					break;
 				}
 			}while(line_in_block.substr(0,7) != "Actual:" && !file.eof());
-			parsing.discoverJump();
+			parsing.discoverJump(); //The parsed block should know where it jumps.
 			all_blocks.insert({{parsing.getFirstInstructionLocation(),parsing}});
 			try{
 				//The previous block falls to the one we are parsing.

@@ -16,7 +16,7 @@ enum class InsType {
 
 class Instruction{
 	public:
-		Instruction();
+		Instruction(); //Blank constructor that should never be used.
 		Instruction(std::string& line);
 		uint64_t getLocation();
 		InsType getType();

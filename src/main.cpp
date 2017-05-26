@@ -17,13 +17,14 @@ int main(int argc, char *argv[]) {
         return -1;
     }
     std::string path(argv[1]); 
+    //I make a hash table. I associate the tags (address line of each block to the blocks themselves.
     std::unordered_map<uint64_t,BBlock> blocks_in_file = Parse::parse_file(path);
     std::cout << "Completed parsing.\n";
     
     for(auto block : blocks_in_file){
-		std::cout << std::get<1>(block).getFirstInstructionLocation() << '\n';
+		//Iterate between all blocks and test the heuristics.
+		//std::cout << std::get<1>(block).getFirstInstructionLocation() << '\n'; //A line of debugging.
 		std::get<1>(block).back_h();
-		
 	}
 	std::cout << "Completed heuristic testing.\n";
 	BBlock::printHeuristicInformation();

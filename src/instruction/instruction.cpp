@@ -25,24 +25,6 @@ Instruction::Instruction(std::string& line){
 		type = InsType::INS;
 	}
 }
-/*
-Instruction::Instruction(uint64_t loc, std::string inputType, uint64_t arg){
-	location = loc;
-	if(inputType == "JMP  "){
-		type = InsType::JMP;
-		arguement = arg;
-	}else if(inputType.at(0) == 'J'){
-		type = InsType::J;
-		arguement = arg;
-	}else if(inputType == "CALL "){
-		type = InsType::CALL;
-	}else if(inputType == "RET  "){
-		type = InsType::RET;
-	}else{
-		type = InsType::INS;
-	}
-}
-* */
 uint64_t Instruction::getLocation(){
 	return location;
 }
