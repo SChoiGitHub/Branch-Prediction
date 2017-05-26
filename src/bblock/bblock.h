@@ -22,8 +22,8 @@ class BBlock{
 		void discoverJump();
 		
 		bool back_h();
-		
-
+		bool back_h_back_branches_only();
+		bool back_h_forward_branches_only();
 		
 		static void printHeuristicInformation();
 	private:

@@ -25,6 +25,8 @@ int main(int argc, char *argv[]) {
 		//Iterate between all blocks and test the heuristics.
 		//std::cout << std::get<1>(block).getFirstInstructionLocation() << '\n'; //A line of debugging.
 		std::get<1>(block).back_h();
+		std::get<1>(block).back_h_back_branches_only();
+		std::get<1>(block).back_h_forward_branches_only();
 	}
 	std::cout << "Completed heuristic testing.\n";
 	BBlock::printHeuristicInformation();

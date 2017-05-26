@@ -38,6 +38,7 @@ std::unordered_map<uint64_t,BBlock> Parse::parse_file(std::string path) {
 				}else if(file.eof()){
 					//This is the last block.
 					parsing.setActual(0xFFFFFFFFFFFFFFFF);
+					//This loop should cancel now.
 					break;
 				}
 			}while(line_in_block.substr(0,7) != "Actual:" && !file.eof());
@@ -51,7 +52,7 @@ std::unordered_map<uint64_t,BBlock> Parse::parse_file(std::string path) {
 				}
 			}catch(std::exception e){
 				//The above will fail the first time because there are no blocks.
-				
+				//Ignore it can continue.
 			}
 			previous_block_addr = parsing.getFirstInstructionLocation(); 
 		}
