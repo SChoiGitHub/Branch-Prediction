@@ -67,3 +67,4 @@ std::unordered_map<uint64_t,BBlock> Parse::parse_file(std::string path) {
     file.close();
     return all_blocks;
 }
+
