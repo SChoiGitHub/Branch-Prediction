@@ -7,9 +7,9 @@ int heuristic_count = 3;
 std::array<int,3> correct_predictions;
 std::array<int,3> total_predictions;
 std::array<std::string,3> heuristic_name{
-"General Back Heuristic",
-"Back-Branch Only Back Heuristic",
-"Forward-Branch Only Back Heuristic"
+	"General Back Heuristic",
+	"Back-Branch Only Back Heuristic",
+	"Forward-Branch Only Back Heuristic"
 };
 int back_h_assignment = 0;
 int back_h_back_branches_only_assignment = 1;

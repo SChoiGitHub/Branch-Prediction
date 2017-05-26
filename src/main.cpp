@@ -5,12 +5,14 @@
 #include <chrono>
 #include <functional>
 #include <algorithm>
+#include <string>
 
 #include "parse/parse.h"
 
 
 
 int main(int argc, char *argv[]) {
+	
     std::string usage = "Usage: " + std::string(argv[0]) + " -fc <filename> | -h";
     if(argc < 2) {
         std::cout << usage << std::endl;

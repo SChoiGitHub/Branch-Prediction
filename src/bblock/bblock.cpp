@@ -6,6 +6,9 @@ BBlock::BBlock(){
 uint64_t BBlock::getFirstInstructionLocation(){
 	return my_instructions[0].getLocation();
 }
+uint64_t BBlock::getLastInstructionLocation(){
+	return my_instructions.back().getLocation();
+}
 void BBlock::addInstruction(Instruction what){
 	my_instructions.push_back(what);
 	if(what.getType() == InsType::J){

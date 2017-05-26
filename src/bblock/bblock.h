@@ -16,6 +16,7 @@ class BBlock{
 	public:
 		BBlock();
 		uint64_t getFirstInstructionLocation(); //Doubles as a getTag()
+		uint64_t getLastInstructionLocation();
 		void addInstruction(Instruction what); //Pushes an instruction.
 		void setActual(uint64_t what);
 		void discoverFall(uint64_t loc);
@@ -29,7 +30,7 @@ class BBlock{
 	private:
 		std::vector<Instruction> my_instructions;
 		uint64_t my_jump_location;
-		uint64_t my_fall_location;
+		uint64_t my_fall_location; //This is where the address will fall.
 		bool can_jump; //True if it has a conditional jump.
 		uint64_t acutal;
 };
