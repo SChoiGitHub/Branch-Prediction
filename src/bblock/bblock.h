@@ -21,7 +21,7 @@ class BBlock{
 		void discoverFall(uint64_t loc);
 		void discoverJump();
 		
-		void back_h();
+		bool back_h();
 		
 
 		
