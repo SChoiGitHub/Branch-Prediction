@@ -16,7 +16,7 @@ Instruction::Instruction(std::string& line){
 		}else{
 			type = InsType::J;
 		}
-		arguement = Parse::s_to_uint64(line.substr(50,18));
+		arguement = Parse::s_to_uint64(line.substr(51,18));
 	}else if(line.substr(43,4) == "call"){
 		type = InsType::CALL;
 	}else if(line.substr(43,3) == "ret"){
