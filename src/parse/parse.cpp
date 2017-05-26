@@ -17,8 +17,6 @@ std::unordered_map<uint64_t,BBlock> Parse::parse_file(std::string path) {
     uint64_t previous_block_addr = 0x000000000; //This is the previous block parsed, none here yet.
 
     for(std::string line; getline(file, line);) {
-		std::cout << line << '\n';
-		
         if(line.length() == 0) continue; //Ignore empty lines
 		if(line.substr(0,6) == "Block "){
 			//We found a block! Time to scan the info.
@@ -37,8 +35,12 @@ std::unordered_map<uint64_t,BBlock> Parse::parse_file(std::string path) {
 					parsing.setActual(s_to_uint64("0x" + line_in_block.substr(8,16)));
 					//The loop should cancel now.
 					break;
+				}else if(file.eof()){
+					//This is the last block.
+					parsing.setActual(0xFFFFFFFFFFFFFFFF);
+					break;
 				}
-			}while(line_in_block.substr(0,7) != "Actual:");
+			}while(line_in_block.substr(0,7) != "Actual:" && !file.eof());
 			parsing.discoverJump();
 			all_blocks.insert({{parsing.getFirstInstructionLocation(),parsing}});
 			try{
