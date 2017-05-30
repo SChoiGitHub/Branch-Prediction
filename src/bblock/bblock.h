@@ -25,15 +25,16 @@ class BBlock{
 		void discoverParents(std::unordered_map<uint64_t,BBlock>& all_blocks);
 		uint64_t get_fall_loc(); 
 		uint64_t get_jump_loc();
-		bool canJump();
+		bool conditional_jump();
 		
 		
 		bool back_h(int heuristic_number_assignment);
 		bool back_h_back_branches_only(int heuristic_number_assignment);
 		bool back_h_forward_branches_only(int heuristic_number_assignment);
-		bool return_h(std::unordered_map<uint64_t,BBlock>& all_blocks, int heuristic_number_assignment);
-		bool call_h(std::unordered_map<uint64_t,BBlock>& all_blocks, int heuristic_number_assignment);
-		bool combined_h(std::unordered_map<uint64_t,BBlock>& all_blocks, int heuristic_number_assignment);
+		bool return_h(int heuristic_number_assignment, std::unordered_map<uint64_t,BBlock>& all_blocks);
+		bool call_h(int heuristic_number_assignment, std::unordered_map<uint64_t,BBlock>& all_blocks);
+		bool opcode_h(int heuristic_number_assignment);
+		bool combined_h(int heuristic_number_assignment, std::unordered_map<uint64_t,BBlock>& all_blocks);
 			
 		static void printHeuristicInformation();
 		
@@ -42,7 +43,7 @@ class BBlock{
 		std::vector<Instruction> my_instructions;
 		uint64_t my_jump_location; //This is where the block may jump
 		uint64_t my_fall_location; //This is where the block will fall.
-		bool can_jump; //True if it has a conditional jump.
+		bool has_conditional_jump; //True if it has a conditional jump.
 		uint64_t actual;
 };
 

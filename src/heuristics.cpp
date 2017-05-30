@@ -19,7 +19,7 @@ std::array<std::string,6> heuristic_name{
  * at a branch is before the instruction to jump in address.
 */
 bool BBlock::back_h(int heuristic_number_assignment){
-	if(can_jump){
+	if(has_conditional_jump){
 		//if we can jump, we can use this.
 		if(my_jump_location < my_instructions.back().getLocation()){
 			//we predict jumping because the jump location is before the instruction to jump.
@@ -42,7 +42,7 @@ bool BBlock::back_h(int heuristic_number_assignment){
 }
 
 bool BBlock::back_h_back_branches_only(int heuristic_number_assignment){
-	if(can_jump && my_jump_location < my_instructions.back().getLocation()){
+	if(has_conditional_jump && my_jump_location < my_instructions.back().getLocation()){
 		//We can jump and the jump location is before the instruction location.
 		//We guess jumping no matter what.
 		if(my_jump_location == actual){
@@ -58,7 +58,7 @@ bool BBlock::back_h_back_branches_only(int heuristic_number_assignment){
 }
 
 bool BBlock::back_h_forward_branches_only(int heuristic_number_assignment){
-	if(can_jump && my_jump_location >= my_instructions.back().getLocation()){
+	if(has_conditional_jump && my_jump_location >= my_instructions.back().getLocation()){
 		//We can jump and the jump location is after the instruction location.
 		//We guess falling no matter what
 		if(my_fall_location == actual){
@@ -78,9 +78,9 @@ bool BBlock::back_h_forward_branches_only(int heuristic_number_assignment){
  * have it. If both or neither have returns, then this heuristic fails.
 */
 
-bool BBlock::return_h(std::unordered_map<uint64_t,BBlock>& all_blocks, int heuristic_number_assignment){
+bool BBlock::return_h(int heuristic_number_assignment, std::unordered_map<uint64_t,BBlock>& all_blocks){
 	try{
-		if(can_jump){
+		if(has_conditional_jump){
 			//These lines search the fall and jump block of a return.
 			bool jump_has_ret = false;
 			for(Instruction i : all_blocks.at(my_jump_location).my_instructions){
@@ -126,6 +126,8 @@ bool BBlock::return_h(std::unordered_map<uint64_t,BBlock>& all_blocks, int heuri
 			return false; //This shows this search was unused.
 		}
 	}catch(std::exception e){
+		//Sometimes, the parsing does not get information on a possible
+		//jump because the input file does not have the information.
 		return false; //This heuristic failed.
 	}
 }
@@ -135,9 +137,9 @@ bool BBlock::return_h(std::unordered_map<uint64_t,BBlock>& all_blocks, int heuri
  * have it. If both or neither have calls, then this heuristic fails.
 */
 
-bool BBlock::call_h(std::unordered_map<uint64_t,BBlock>& all_blocks, int heuristic_number_assignment){
+bool BBlock::call_h(int heuristic_number_assignment, std::unordered_map<uint64_t,BBlock>& all_blocks){
 	try{
-		if(can_jump){
+		if(has_conditional_jump){
 			
 			//These lines search the fall and jump block of a return.
 			bool jump_has_call = false;
@@ -184,24 +186,34 @@ bool BBlock::call_h(std::unordered_map<uint64_t,BBlock>& all_blocks, int heurist
 			return false; //This shows this search was unused.
 		}
 	}catch(std::exception e){
+		//Sometimes, the parsing does not get information on a possible
+		//jump because the input file does not have the information.
 		return false; //This heuristic failed.
 	}
+}
+
+/* The opcode heuristic predicts jump whenever the jump makes a comparison
+ * that involves greater than zero.
+*/
+
+bool BBlock::opcode_h(int heuristic_number_assignment){
+	//Does not work for now.
 }
 
 /* The combined heuristic uses multiple heuristics in a certain order
  * until it finds one that can work. It can fail in somecases.
 */
 
-bool BBlock::combined_h(std::unordered_map<uint64_t,BBlock>& all_blocks,  int heuristic_number_assignment){
-	if(return_h(all_blocks,heuristic_number_assignment)){
+bool BBlock::combined_h(int heuristic_number_assignment, std::unordered_map<uint64_t,BBlock>& all_blocks){
+	if(return_h(heuristic_number_assignment, all_blocks)){
 		return true;
-	}else if(call_h(all_blocks,heuristic_number_assignment)){
+	}else if(call_h(heuristic_number_assignment, all_blocks)){
 		return true;
 	}else if(back_h(heuristic_number_assignment)){
 		return true;
-	}else{
-		return false; //The combined heuristic somehow failed.
 	}
+	
+	return false;
 }
 
 void BBlock::printHeuristicInformation(){

@@ -28,15 +28,16 @@ int main(int argc, char *argv[]) {
 		std::get<1>(block).discoverParents(blocks_in_file);
 	}
     
+    
     for(auto block : blocks_in_file){
 		//Iterate between all blocks and test the heuristics.
 		//std::cout << std::get<1>(block).getFirstInstructionLocation() << '\n'; //A line of debugging.
 		std::get<1>(block).back_h(0);
 		std::get<1>(block).back_h_back_branches_only(1);
 		std::get<1>(block).back_h_forward_branches_only(2);
-		std::get<1>(block).return_h(blocks_in_file,3);
-		std::get<1>(block).call_h(blocks_in_file,4);
-		std::get<1>(block).combined_h(blocks_in_file,5);
+		std::get<1>(block).return_h(3,blocks_in_file);
+		std::get<1>(block).call_h(4,blocks_in_file);
+		std::get<1>(block).combined_h(5,blocks_in_file);
 	}
 	std::cout << "Completed heuristic testing.\n";
 	BBlock::printHeuristicInformation();
