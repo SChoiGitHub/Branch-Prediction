@@ -28,12 +28,13 @@ class BBlock{
 		bool canJump();
 		
 		
-		bool back_h();
-		bool back_h_back_branches_only();
-		bool back_h_forward_branches_only();
-		bool return_h(std::unordered_map<uint64_t,BBlock>& all_blocks);
-		bool call_h(std::unordered_map<uint64_t,BBlock>& all_blocks);
-		
+		bool back_h(int heuristic_number_assignment);
+		bool back_h_back_branches_only(int heuristic_number_assignment);
+		bool back_h_forward_branches_only(int heuristic_number_assignment);
+		bool return_h(std::unordered_map<uint64_t,BBlock>& all_blocks, int heuristic_number_assignment);
+		bool call_h(std::unordered_map<uint64_t,BBlock>& all_blocks, int heuristic_number_assignment);
+		bool combined_h(std::unordered_map<uint64_t,BBlock>& all_blocks, int heuristic_number_assignment);
+			
 		static void printHeuristicInformation();
 		
 		std::vector<uint64_t> parents;
