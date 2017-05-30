@@ -17,7 +17,7 @@ void BBlock::addInstruction(Instruction what){
 	}
 }
 void BBlock::setActual(uint64_t what){
-	acutal = what;
+	actual = what;
 }
 void BBlock::discoverParents(std::unordered_map<uint64_t,BBlock>& all_blocks){
 	if(all_blocks.find(get_fall_loc()) != all_blocks.end()){

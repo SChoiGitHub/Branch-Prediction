@@ -31,6 +31,8 @@ class BBlock{
 		bool back_h();
 		bool back_h_back_branches_only();
 		bool back_h_forward_branches_only();
+		bool return_h(std::unordered_map<uint64_t,BBlock>& all_blocks);
+		bool call_h(std::unordered_map<uint64_t,BBlock>& all_blocks);
 		
 		static void printHeuristicInformation();
 		
@@ -40,7 +42,7 @@ class BBlock{
 		uint64_t my_jump_location; //This is where the block may jump
 		uint64_t my_fall_location; //This is where the block will fall.
 		bool can_jump; //True if it has a conditional jump.
-		uint64_t acutal;
+		uint64_t actual;
 };
 
 
