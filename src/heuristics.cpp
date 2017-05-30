@@ -3,15 +3,16 @@
 
 #include "bblock/bblock.h"
 
-int heuristic_count = 6;
-std::array<int,6> correct_predictions;
-std::array<int,6> total_predictions;
-std::array<std::string,6> heuristic_name{
+int heuristic_count = 7;
+std::array<int,7> correct_predictions;
+std::array<int,7> total_predictions;
+std::array<std::string,7> heuristic_name{
 	"General Back Heuristic",
 	"Back-Branch Only Back Heuristic",
 	"Forward-Branch Only Back Heuristic",
 	"Return Heuristic",
 	"Call Heuristic",
+	"Opcode Heuristic",
 	"Combined Heuristic"
 };
 
@@ -197,7 +198,14 @@ bool BBlock::call_h(int heuristic_number_assignment, std::unordered_map<uint64_t
 */
 
 bool BBlock::opcode_h(int heuristic_number_assignment){
-	//Does not work for now.
+	InsType type = my_instructions.back().getType();
+	
+	//All jumps that involve jumping whenever something is zero or greater than zero 
+	std::vector<InsType> jmp_zero_or_greater = {
+        InsType::JLE
+    };
+	
+	return false;
 }
 
 /* The combined heuristic uses multiple heuristics in a certain order

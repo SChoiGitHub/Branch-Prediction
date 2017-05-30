@@ -37,7 +37,8 @@ int main(int argc, char *argv[]) {
 		std::get<1>(block).back_h_forward_branches_only(2);
 		std::get<1>(block).return_h(3,blocks_in_file);
 		std::get<1>(block).call_h(4,blocks_in_file);
-		std::get<1>(block).combined_h(5,blocks_in_file);
+		std::get<1>(block).opcode_h(5);
+		std::get<1>(block).combined_h(6,blocks_in_file);
 	}
 	std::cout << "Completed heuristic testing.\n";
 	BBlock::printHeuristicInformation();
