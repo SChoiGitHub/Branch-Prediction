@@ -203,9 +203,56 @@ bool BBlock::opcode_h(int heuristic_number_assignment){
 	//All jumps that involve jumping whenever something is zero or greater than zero 
 	std::vector<InsType> jmp_zero_or_greater = {
         InsType::JLE
+        
+        //JmpType::JA,
+        //JmpType::JGE,
+        //JmpType::JG,
     };
-	
-	return false;
+    
+    
+    for(InsType t : jmp_zero_or_greater){
+		//Is our type one of the types that would indicate a jump that is higher than or equal to zero?
+		if(type == t){
+			//If so, we have to guess that we jump.
+			if(actual == my_jump_location){
+				//we were correct!
+				correct_predictions[heuristic_number_assignment]++;
+			}
+			//Regardless, we made a prediction
+			total_predictions[heuristic_number_assignment]++;
+			return true; //The heuristic worked
+		}
+	}
+    
+	 std::vector<InsType> jmp_negative = {
+        InsType::JNZ,
+        InsType::JZ,
+        InsType::JNL,
+        InsType::JB,
+        InsType::JNB
+
+        //JmpType::JLE,
+        //JmpType::JNAE,
+        //JmpType::JL,
+        //JmpType::JNGE
+    };
+    
+    for(InsType t : jmp_negative){
+		//Is our type one of the types that would indicate a jump that is less than zero?
+		if(type == t){
+			//We have to guess that we fall then.
+			if(actual == my_fall_location){
+				//We were correct
+				correct_predictions[heuristic_number_assignment]++;
+			}
+			//Regardless, we made a prediction
+			total_predictions[heuristic_number_assignment]++;
+			return true; //The heuristic worked
+		}
+	}
+    
+    
+	return false; //The heuristic was not applied
 }
 
 /* The combined heuristic uses multiple heuristics in a certain order
