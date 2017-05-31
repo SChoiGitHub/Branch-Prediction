@@ -194,7 +194,10 @@ bool BBlock::call_h(int heuristic_number_assignment, std::unordered_map<uint64_t
 }
 
 /* The opcode heuristic predicts jump whenever the jump makes a comparison
- * that involves greater than zero.
+ * that involves being greater or less than zero. If something indicates a
+ * jump if something is less than zero, than you predict that it will fall.
+ * If a jump works if zomething is greater than or equal to zero, you 
+ * predict that it will jump.
 */
 
 bool BBlock::opcode_h(int heuristic_number_assignment){

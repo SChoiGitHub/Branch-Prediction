@@ -27,7 +27,6 @@ class BBlock{
 		uint64_t get_jump_loc();
 		bool conditional_jump();
 		
-		
 		bool back_h(int heuristic_number_assignment);
 		bool back_h_back_branches_only(int heuristic_number_assignment);
 		bool back_h_forward_branches_only(int heuristic_number_assignment);

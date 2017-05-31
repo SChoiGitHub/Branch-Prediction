@@ -43,4 +43,5 @@ int main(int argc, char *argv[]) {
 	std::cout << "Completed heuristic testing.\n";
 	BBlock::printHeuristicInformation();
 	
+	
 }
