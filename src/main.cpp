@@ -8,7 +8,7 @@
 #include <string>
 
 #include "parse/parse.h"
-
+#include "profile/profile.h"
 
 
 int main(int argc, char *argv[]) {
@@ -23,6 +23,10 @@ int main(int argc, char *argv[]) {
     std::unordered_map<uint64_t,BBlock> blocks_in_file = Parse::parse_file(path);
     std::cout << "Completed parsing.\n";
     
+    
+    std::cout << "Profiling...\n";
+    Profile::profile(blocks_in_file);
+    std::cout << "Profiling Complete!\n";
     
     
 	for(auto block : blocks_in_file){
@@ -39,9 +43,8 @@ int main(int argc, char *argv[]) {
 		std::get<1>(block).back_h_forward_branches_only(2);
 		std::get<1>(block).return_h(3,blocks_in_file);
 		std::get<1>(block).call_h(4,blocks_in_file);
-		std::get<1>(block).opcode_h(5);
-		std::get<1>(block).store_h(6,blocks_in_file);
-		std::get<1>(block).combined_h(7,blocks_in_file);
+		std::get<1>(block).store_h(5,blocks_in_file);
+		std::get<1>(block).combined_h(6,blocks_in_file);
 	}
 	std::cout << "Completed heuristic testing.\n";
 	BBlock::printHeuristicInformation();

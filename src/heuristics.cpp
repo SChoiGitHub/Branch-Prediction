@@ -3,16 +3,15 @@
 
 #include "bblock/bblock.h"
 
-int heuristic_count = 8;
-std::array<int,8> correct_predictions;
-std::array<int,8> total_predictions;
-std::array<std::string,8> heuristic_name{
+int heuristic_count = 7;
+std::array<int,7> correct_predictions;
+std::array<int,7> total_predictions;
+std::array<std::string,7> heuristic_name{
 	"General Back Heuristic",
 	"Back-Branch Only Back Heuristic",
 	"Forward-Branch Only Back Heuristic",
 	"Return Heuristic",
 	"Call Heuristic",
-	"Opcode Heuristic",
 	"Store Heuristic",
 	"Combined Heuristic"
 };
@@ -194,71 +193,6 @@ bool BBlock::call_h(int heuristic_number_assignment, std::unordered_map<uint64_t
 	}
 }
 
-/* The opcode heuristic predicts jump whenever the jump makes a comparison
- * that involves being greater or less than zero. If something indicates a
- * jump if something is less than zero, than you predict that it will fall.
- * If a jump works if zomething is greater than or equal to zero, you 
- * predict that it will jump.
-*/
-
-bool BBlock::opcode_h(int heuristic_number_assignment){
-	InsType type = my_instructions.back().getType();
-	
-	//All jumps that involve jumping whenever something is zero or greater than zero 
-	std::vector<InsType> jmp_zero_or_greater = {
-        InsType::JLE
-        
-        //JmpType::JA,
-        //JmpType::JGE,
-        //JmpType::JG,
-    };
-    
-    
-    for(InsType t : jmp_zero_or_greater){
-		//Is our type one of the types that would indicate a jump that is higher than or equal to zero?
-		if(type == t){
-			//If so, we have to guess that we jump.
-			if(actual == my_jump_location){
-				//we were correct!
-				correct_predictions[heuristic_number_assignment]++;
-			}
-			//Regardless, we made a prediction
-			total_predictions[heuristic_number_assignment]++;
-			return true; //The heuristic worked
-		}
-	}
-    
-	 std::vector<InsType> jmp_negative = {
-        InsType::JNZ,
-        InsType::JZ,
-        InsType::JNL,
-        InsType::JB,
-        InsType::JNB
-
-        //JmpType::JLE,
-        //JmpType::JNAE,
-        //JmpType::JL,
-        //JmpType::JNGE
-    };
-    
-    for(InsType t : jmp_negative){
-		//Is our type one of the types that would indicate a jump that is less than zero?
-		if(type == t){
-			//We have to guess that we fall then.
-			if(actual == my_fall_location){
-				//We were correct
-				correct_predictions[heuristic_number_assignment]++;
-			}
-			//Regardless, we made a prediction
-			total_predictions[heuristic_number_assignment]++;
-			return true; //The heuristic worked
-		}
-	}
-    
-    
-	return false; //The heuristic was not applied
-}
-
 /* The store heuristic predicts that when one of the branches has a store,
  * we will predict the branch that does not have a store.
 */
@@ -335,6 +269,6 @@ bool BBlock::combined_h(int heuristic_number_assignment, std::unordered_map<uint
 void BBlock::printHeuristicInformation(){
 	std::cout << "Here are your results:\n";
 	for(int x = 0; x < heuristic_count; x++){
-		std::cout << heuristic_name[x] << ": There were " << correct_predictions[x] << " correct predictions out of " << total_predictions[x] << " total predictions. (" << (100.0*correct_predictions[x]/total_predictions[x]) << "% Success)\n";
+		std::cout << '\t' << heuristic_name[x] << ": There were " << correct_predictions[x] << " correct predictions out of " << total_predictions[x] << " total predictions. (" << (100.0*correct_predictions[x]/total_predictions[x]) << "% Success)\n";
 	}
 }

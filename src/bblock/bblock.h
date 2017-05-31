@@ -25,18 +25,25 @@ class BBlock{
 		void discoverParents(std::unordered_map<uint64_t,BBlock>& all_blocks);
 		uint64_t get_fall_loc(); 
 		uint64_t get_jump_loc();
+		uint64_t get_actual_loc();
 		bool conditional_jump();
+		
+		Instruction getLastInstruction();
 		
 		bool back_h(int heuristic_number_assignment);
 		bool back_h_back_branches_only(int heuristic_number_assignment);
 		bool back_h_forward_branches_only(int heuristic_number_assignment);
 		bool return_h(int heuristic_number_assignment, std::unordered_map<uint64_t,BBlock>& all_blocks);
 		bool call_h(int heuristic_number_assignment, std::unordered_map<uint64_t,BBlock>& all_blocks);
-		bool opcode_h(int heuristic_number_assignment);
 		bool store_h(int heuristic_number_assignment, std::unordered_map<uint64_t,BBlock>& all_blocks);
 		bool combined_h(int heuristic_number_assignment, std::unordered_map<uint64_t,BBlock>& all_blocks);
 			
 		static void printHeuristicInformation();
+		
+		//Attempts at finding loops
+		std::vector<uint64_t> loop(std::unordered_map<uint64_t,BBlock>& all_blocks, std::vector<uint64_t> return_me);
+		std::vector<uint64_t> loop(std::unordered_map<uint64_t,BBlock>& all_blocks);
+		
 		
 		//These are here for graphing purposes.
 		std::vector<uint64_t> existing_parents;
