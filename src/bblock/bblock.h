@@ -37,13 +37,17 @@ class BBlock{
 			
 		static void printHeuristicInformation();
 		
-		std::vector<uint64_t> parents;
+		//These are here for graphing purposes.
+		std::vector<uint64_t> existing_parents;
+		std::vector<uint64_t> existing_children;
 	private:
 		std::vector<Instruction> my_instructions;
 		uint64_t my_jump_location; //This is where the block may jump
 		uint64_t my_fall_location; //This is where the block will fall.
 		bool has_conditional_jump; //True if it has a conditional jump.
 		uint64_t actual;
+		
+		
 };
 
 

@@ -22,7 +22,8 @@ void BBlock::setActual(uint64_t what){
 void BBlock::discoverParents(std::unordered_map<uint64_t,BBlock>& all_blocks){
 	try{
 		//Get our fall location's BBlock. Make it know that this block is its parent.
-		(all_blocks.at(get_fall_loc())).parents.push_back(this->getFirstInstructionLocation());
+		(all_blocks.at(get_fall_loc())).existing_parents.push_back(this->getFirstInstructionLocation());
+		existing_children.push_back(get_fall_loc());
 	}catch(std::exception e){
 		//Sometimes, we do not have information on the block...
 		//This exception catching prevents total shutdown in case it does not exist.
@@ -30,7 +31,8 @@ void BBlock::discoverParents(std::unordered_map<uint64_t,BBlock>& all_blocks){
 	if(has_conditional_jump){
 		//if jump exists, then we have to make it know that this block is its parent.
 		try{
-			(all_blocks.at(get_jump_loc())).parents.push_back(this->getFirstInstructionLocation());
+			(all_blocks.at(get_jump_loc())).existing_parents.push_back(this->getFirstInstructionLocation());
+			existing_children.push_back(get_jump_loc());
 		}catch(std::exception e){
 			//Sometimes, we do not have information on the block...
 			//This exception catching prevents total shutdown in case it does not exist.
@@ -38,7 +40,8 @@ void BBlock::discoverParents(std::unordered_map<uint64_t,BBlock>& all_blocks){
 	}
 	try{
 		//Sometimes, acutal is not a fall location or a jump location.
-		(all_blocks.at(actual)).parents.push_back(this->getFirstInstructionLocation());
+		(all_blocks.at(actual)).existing_parents.push_back(this->getFirstInstructionLocation());
+		existing_children.push_back(actual);
 	}catch(std::exception e){
 		//In case something goes horribly wrong.
 		//The last block may not have a BBlock, since it does not have an actual.
