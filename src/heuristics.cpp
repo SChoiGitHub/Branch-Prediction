@@ -3,16 +3,17 @@
 
 #include "bblock/bblock.h"
 
-int heuristic_count = 7;
-std::array<int,7> correct_predictions;
-std::array<int,7> total_predictions;
-std::array<std::string,7> heuristic_name{
+int heuristic_count = 8;
+std::array<int,8> correct_predictions;
+std::array<int,8> total_predictions;
+std::array<std::string,8> heuristic_name{
 	"General Back Heuristic",
 	"Back-Branch Only Back Heuristic",
 	"Forward-Branch Only Back Heuristic",
 	"Return Heuristic",
 	"Call Heuristic",
 	"Opcode Heuristic",
+	"Store Heuristic",
 	"Combined Heuristic"
 };
 
@@ -82,7 +83,7 @@ bool BBlock::back_h_forward_branches_only(int heuristic_number_assignment){
 bool BBlock::return_h(int heuristic_number_assignment, std::unordered_map<uint64_t,BBlock>& all_blocks){
 	try{
 		if(has_conditional_jump){
-			//These lines search the fall and jump block of a return.
+			//These lines search the fall and jump block for a return.
 			bool jump_has_ret = false;
 			for(Instruction i : all_blocks.at(my_jump_location).my_instructions){
 				if(i.getType() ==  InsType::RET){
@@ -263,7 +264,55 @@ bool BBlock::opcode_h(int heuristic_number_assignment){
 */
 
 bool BBlock::store_h(int heuristic_number_assignment, std::unordered_map<uint64_t,BBlock>& all_blocks){
-	
+	try{
+		if(has_conditional_jump){
+			//These lines search the fall and jump block for a store
+			bool jump_has_store = false;
+			for(Instruction i : all_blocks.at(my_jump_location).my_instructions){
+				if(i.getType() ==  InsType::REP_STOS){
+					jump_has_store = true;
+					break;
+				}
+			}
+			
+			bool fall_has_store = false;
+			for(Instruction i : all_blocks.at(my_fall_location).my_instructions){
+				if(i.getType() ==  InsType::REP_STOS){
+					fall_has_store = true;
+					break;
+				}
+			}
+			
+			if(fall_has_store == jump_has_store){
+				return false; //This failed because both either have or does not have a store
+			}else if(jump_has_store){
+				//jump has store, so we guess the fall
+				if(my_fall_location == actual){
+					//correct!
+					correct_predictions[heuristic_number_assignment]++;
+				}
+				//regardless, we guessed.
+				total_predictions[heuristic_number_assignment]++;
+				return true; //This heuristic worked.
+			}else{
+				//fall MUST HAVE return, so we guess jump
+				if(my_jump_location == actual){
+					//correct!
+					correct_predictions[heuristic_number_assignment]++;
+				}
+				//regardless, we guessed.
+				total_predictions[heuristic_number_assignment]++;
+				return true; //This heuristic worked.
+			}
+			
+		}else{
+			return false; //This shows this search was unused.
+		}
+	}catch(std::exception e){
+		//Sometimes, the parsing does not get information on a possible
+		//jump because the input file does not have the information.
+		return false; //This heuristic failed.
+	}
 	return false; //The heuristic was not applied
 }
 

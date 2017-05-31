@@ -61,6 +61,12 @@ Instruction::Instruction(std::string& line){
 	}
 }
 std::string Instruction::processInstructionType(std::string input){
+	if(input == "rep stos"){
+		std::cout << "found rep stos\n";
+	}
+	
+	
+	
 	std::string processed_output = "";
 	bool was_spaced = false;
 	for(char i : input){
