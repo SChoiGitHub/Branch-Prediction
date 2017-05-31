@@ -8,6 +8,7 @@ std::unordered_map<std::string,InsType> stringToInstruction({
     {"INS",InsType::INS}, // unhandled case
     {"CALL",InsType::CALL}, //CALL
     {"RET",InsType::RET}, //RETURN
+    {"REP STOS",InsType::REP_STOS},  // A Store Command
     {"JMP",InsType::JMP},   // Unconditional jmp
     {"JO",InsType::JO},    // Jump if overflow
     {"JNO",InsType::JNO},   // Jump if not overflow
@@ -50,7 +51,7 @@ Instruction::Instruction(std::string& line){
 	location = Parse::s_to_uint64(line.substr(2,18));
 	try{
 		//We can TRY to parse the file to give us the type.
-		type = stringToInstruction.at(processInstructionType(line.substr(43,7)));
+		type = stringToInstruction.at(processInstructionType(line.substr(43,8)));
 		if(isJump()){
 			arguement = Parse::s_to_uint64(line.substr(51,18));
 		}
@@ -61,10 +62,17 @@ Instruction::Instruction(std::string& line){
 }
 std::string Instruction::processInstructionType(std::string input){
 	std::string processed_output = "";
+	bool was_spaced = false;
 	for(char i : input){
-		if(i != ' '){
+		if('a' <= i && i <= 'z'){
+			if(was_spaced){
+				processed_output +=  ' ';
+				was_spaced = false;
+			}
 			processed_output +=  (char) toupper(i);
-		}
+		}else{
+			was_spaced = true;
+		}	
 	}
 	return processed_output;
 }

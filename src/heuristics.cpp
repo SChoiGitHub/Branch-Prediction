@@ -258,6 +258,15 @@ bool BBlock::opcode_h(int heuristic_number_assignment){
 	return false; //The heuristic was not applied
 }
 
+/* The store heuristic predicts that when one of the branches has a store,
+ * we will predict the branch that does not have a store.
+*/
+
+bool BBlock::store_h(int heuristic_number_assignment, std::unordered_map<uint64_t,BBlock>& all_blocks){
+	
+	return false; //The heuristic was not applied
+}
+
 /* The combined heuristic uses multiple heuristics in a certain order
  * until it finds one that can work. It can fail in somecases.
 */

@@ -33,6 +33,7 @@ class BBlock{
 		bool return_h(int heuristic_number_assignment, std::unordered_map<uint64_t,BBlock>& all_blocks);
 		bool call_h(int heuristic_number_assignment, std::unordered_map<uint64_t,BBlock>& all_blocks);
 		bool opcode_h(int heuristic_number_assignment);
+		bool store_h(int heuristic_number_assignment, std::unordered_map<uint64_t,BBlock>& all_blocks);
 		bool combined_h(int heuristic_number_assignment, std::unordered_map<uint64_t,BBlock>& all_blocks);
 			
 		static void printHeuristicInformation();

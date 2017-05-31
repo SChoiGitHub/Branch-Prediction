@@ -10,6 +10,7 @@ enum class InsType {
     INS, // unhandled case
     CALL, //CALL
     RET, //RETURN
+    REP_STOS, //A store command
     JMP,   // Unconditional jmp
     JO,    // Jump if overflow
     JNO,   // Jump if not overflow

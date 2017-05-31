@@ -23,6 +23,8 @@ int main(int argc, char *argv[]) {
     std::unordered_map<uint64_t,BBlock> blocks_in_file = Parse::parse_file(path);
     std::cout << "Completed parsing.\n";
     
+    
+    
 	for(auto block : blocks_in_file){
 		//Iterate between all blocks and associate them with their parents.
 		std::get<1>(block).discoverParents(blocks_in_file);
