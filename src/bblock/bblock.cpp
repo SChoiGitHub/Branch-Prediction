@@ -2,6 +2,7 @@
 
 BBlock::BBlock(){
 	has_conditional_jump = false;
+	has_store = false;
 }
 uint64_t BBlock::getFirstInstructionLocation(){
 	return my_instructions[0].getLocation();

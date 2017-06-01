@@ -200,6 +200,8 @@ bool BBlock::call_h(int heuristic_number_assignment, std::unordered_map<uint64_t
 bool BBlock::store_h(int heuristic_number_assignment, std::unordered_map<uint64_t,BBlock>& all_blocks){
 	try{
 		if(has_conditional_jump){
+			
+			
 			if(all_blocks.at(my_jump_location).has_store == all_blocks.at(my_fall_location).has_store){
 				return false; //This failed because both either have or does not have a store
 			}else if(all_blocks.at(my_jump_location).has_store){
