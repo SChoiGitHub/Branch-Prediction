@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
     std::cout << "Completed parsing.\n";
     
 
-    Profile::profile(blocks_in_file);
+    Profile::print_profile(blocks_in_file);
     std::cout << "Profiling Complete!\n";
     
     //Now that we have the blocks.

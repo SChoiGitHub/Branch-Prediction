@@ -49,12 +49,23 @@ enum class InsType {
 class Instruction{
 	public:
 		Instruction(); //Blank constructor that should never be used.
+		//Precondition: line contains instruction details.
+		//Postcondition: instruction is created
 		Instruction(std::string& line);
+		//Precondition: string contains the instruction type.
+		//Postcondition: none
+		//Return: This parses the input, turning it into an InsType
 		static std::string processInstructionType(const std::string& input);
+		//Precondition: Instruction exists.
+		//Postcondition: none.
+		//Return: if this instruction is a jump (both unconditional and conditional), return true. Otherwise, false.
+		bool isJump();
+		
+		//The methods below are self-explanatory. They are get methods.
 		uint64_t getLocation();
 		InsType getType();
 		uint64_t getArguement();
-		bool isJump();
+
 	private:
 		uint64_t location;
 		InsType type;

@@ -69,7 +69,7 @@ std::array<std::string, 32> intToString({
 	"JECXZ"  // Jump if $ECX register is 0
 });
 
-void Profile::profile(std::unordered_map<uint64_t,BBlock> all_blocks){
+void Profile::print_profile(std::unordered_map<uint64_t,BBlock>& all_blocks){
 	std::array<int,32> correct_jump_of_type;
 	std::array<int,32> total_jump_of_type;
 	
