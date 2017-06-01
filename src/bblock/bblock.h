@@ -54,11 +54,6 @@ class BBlock{
 			
 		static void printHeuristicInformation();
 		
-		//Attempts at finding loops
-		std::vector<uint64_t> loop(std::unordered_map<uint64_t,BBlock>& all_blocks, std::vector<uint64_t> return_me);
-		std::vector<uint64_t> loop(std::unordered_map<uint64_t,BBlock>& all_blocks);
-		
-		
 		//These are here for graphing purposes.
 		std::vector<uint64_t> existing_parents;
 		std::vector<uint64_t> existing_children;

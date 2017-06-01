@@ -77,7 +77,7 @@ void Profile::profile(std::unordered_map<uint64_t,BBlock> all_blocks){
 		correct_jump_of_type[x] = 0;
 		total_jump_of_type[x] = 0;
 	}
-	for(auto block : all_blocks){
+	for(auto &block : all_blocks){
 		try{
 			//Iterate between all blocks and profile the jumps that work
 			//We found a jump of this type.
@@ -91,7 +91,7 @@ void Profile::profile(std::unordered_map<uint64_t,BBlock> all_blocks){
 		}
 		
 	}
-	std::cout << "Type\tTaken\tTotal\tTaken\tPercent Taken\n";
+	std::cout << "Type\tTaken\tTotal\tPercent Taken\n";
 	for(int x = 0; x < 32; x++){
 		std::cout << intToString[x] << '\t'<< correct_jump_of_type[x] << '\t' << total_jump_of_type[x] << '\t' << (correct_jump_of_type[x]*1.0/total_jump_of_type[x]) << '\n';
 	}

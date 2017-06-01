@@ -28,6 +28,9 @@ void BBlock::addInstruction(Instruction what){
 			case InsType::CALL:
 				has_call = true;
 				break;
+			default:
+				//Yes, nothing.
+				break;
 		}
 	}
 }
