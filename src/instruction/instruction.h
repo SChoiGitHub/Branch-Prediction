@@ -50,7 +50,7 @@ class Instruction{
 	public:
 		Instruction(); //Blank constructor that should never be used.
 		Instruction(std::string& line);
-		static std::string processInstructionType(std::string input);
+		static std::string processInstructionType(const std::string& input);
 		uint64_t getLocation();
 		InsType getType();
 		uint64_t getArguement();

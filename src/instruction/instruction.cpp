@@ -60,7 +60,7 @@ Instruction::Instruction(std::string& line){
 		type = InsType::INS;
 	}
 }
-std::string Instruction::processInstructionType(std::string input){
+std::string Instruction::processInstructionType(const std::string& input){
 	
 	std::string processed_output = "";
 	bool was_spaced = false;

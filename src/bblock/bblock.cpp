@@ -79,9 +79,6 @@ uint64_t BBlock::get_jump_loc(){
 uint64_t BBlock::get_actual_loc(){
 	return actual;
 }
-bool BBlock::conditional_jump(){
-	return has_conditional_jump;
-}
 Instruction BBlock::getLastInstruction(){
 	return my_instructions.back();
 }

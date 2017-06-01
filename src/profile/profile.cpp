@@ -91,7 +91,7 @@ void Profile::profile(std::unordered_map<uint64_t,BBlock> all_blocks){
 		}
 		
 	}
-	std::cout << "Type\tTaken\tTotal\tPercent Taken\n";
+	std::cout << "Type\tTaken\tTotal\tTaken\tPercent Taken\n";
 	for(int x = 0; x < 32; x++){
 		std::cout << intToString[x] << '\t'<< correct_jump_of_type[x] << '\t' << total_jump_of_type[x] << '\t' << (correct_jump_of_type[x]*1.0/total_jump_of_type[x]) << '\n';
 	}
