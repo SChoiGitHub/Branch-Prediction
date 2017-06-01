@@ -200,26 +200,9 @@ bool BBlock::call_h(int heuristic_number_assignment, std::unordered_map<uint64_t
 bool BBlock::store_h(int heuristic_number_assignment, std::unordered_map<uint64_t,BBlock>& all_blocks){
 	try{
 		if(has_conditional_jump){
-			//These lines search the fall and jump block for a store
-			bool jump_has_store = false;
-			for(Instruction i : all_blocks.at(my_jump_location).my_instructions){
-				if(i.getType() ==  InsType::REP_STOS){
-					jump_has_store = true;
-					break;
-				}
-			}
-			
-			bool fall_has_store = false;
-			for(Instruction i : all_blocks.at(my_fall_location).my_instructions){
-				if(i.getType() ==  InsType::REP_STOS){
-					fall_has_store = true;
-					break;
-				}
-			}
-			
-			if(fall_has_store == jump_has_store){
+			if(all_blocks.at(my_jump_location).has_store == all_blocks.at(my_fall_location).has_store){
 				return false; //This failed because both either have or does not have a store
-			}else if(jump_has_store){
+			}else if(all_blocks.at(my_jump_location).has_store){
 				//jump has store, so we guess the fall
 				if(my_fall_location == actual){
 					//correct!
@@ -229,7 +212,7 @@ bool BBlock::store_h(int heuristic_number_assignment, std::unordered_map<uint64_
 				total_predictions[heuristic_number_assignment]++;
 				return true; //This heuristic worked.
 			}else{
-				//fall MUST HAVE return, so we guess jump
+				//fall MUST HAVE store, so we guess jump
 				if(my_jump_location == actual){
 					//correct!
 					correct_predictions[heuristic_number_assignment]++;

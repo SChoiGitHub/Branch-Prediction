@@ -14,6 +14,8 @@ void BBlock::addInstruction(Instruction what){
 	if(what.isJump() && what.getType() != InsType::JMP){
 		//We have to care about this since it conditionally jumps now.
 		has_conditional_jump = true;
+	}else if(what.getType() == InsType::REP_STOS){
+		has_store = true;
 	}
 }
 void BBlock::setActual(uint64_t what){
