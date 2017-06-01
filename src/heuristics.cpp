@@ -82,26 +82,9 @@ bool BBlock::back_h_forward_branches_only(int heuristic_number_assignment){
 bool BBlock::return_h(int heuristic_number_assignment, std::unordered_map<uint64_t,BBlock>& all_blocks){
 	try{
 		if(has_conditional_jump){
-			//These lines search the fall and jump block for a return.
-			bool jump_has_ret = false;
-			for(Instruction i : all_blocks.at(my_jump_location).my_instructions){
-				if(i.getType() ==  InsType::RET){
-					jump_has_ret = true;
-					break;
-				}
-			}
-			
-			bool fall_has_ret = false;
-			for(Instruction i : all_blocks.at(my_fall_location).my_instructions){
-				if(i.getType() ==  InsType::RET){
-					fall_has_ret = true;
-					break;
-				}
-			}
-			
-			if(fall_has_ret == jump_has_ret){
+			if(all_blocks.at(my_fall_location).has_return == all_blocks.at(my_jump_location).has_return){
 				return false; //This failed because both either have or does not have a return
-			}else if(fall_has_ret){
+			}else if(all_blocks.at(my_fall_location).has_return){
 				//fall has return, so we guess the jump
 				if(my_jump_location == actual){
 					//correct!
@@ -109,7 +92,6 @@ bool BBlock::return_h(int heuristic_number_assignment, std::unordered_map<uint64
 				}
 				//regardless, we guessed
 				total_predictions[heuristic_number_assignment]++;
-				
 				return true; //This heuristic worked.
 			}else{
 				//jump MUST HAVE return, so we guess fall
@@ -119,7 +101,6 @@ bool BBlock::return_h(int heuristic_number_assignment, std::unordered_map<uint64
 				}
 				//regardless, we guessed
 				total_predictions[heuristic_number_assignment]++;
-				
 				return true; //This heuristic worked.
 			}
 			
@@ -140,28 +121,10 @@ bool BBlock::return_h(int heuristic_number_assignment, std::unordered_map<uint64
 
 bool BBlock::call_h(int heuristic_number_assignment, std::unordered_map<uint64_t,BBlock>& all_blocks){
 	try{
-		if(has_conditional_jump){
-			
-			//These lines search the fall and jump block of a return.
-			bool jump_has_call = false;
-			for(Instruction i : all_blocks.at(my_jump_location).my_instructions){
-				if(i.getType() ==  InsType::CALL){
-					jump_has_call = true;
-					break;
-				}
-			}
-			
-			bool fall_has_call = false;
-			for(Instruction i : all_blocks.at(my_fall_location).my_instructions){
-				if(i.getType() ==  InsType::CALL){
-					fall_has_call = true;
-					break;
-				}
-			}
-			
-			if(jump_has_call == fall_has_call){
+		if(has_conditional_jump){	
+			if(all_blocks.at(my_jump_location).has_call == all_blocks.at(my_fall_location).has_call){
 				return false; //This failed because both either have or does not have a call
-			}else if(jump_has_call){
+			}else if(all_blocks.at(my_jump_location).has_call){
 				//jump has call, so we guess the jump
 				if(my_jump_location == actual){
 					//correct!
@@ -169,7 +132,6 @@ bool BBlock::call_h(int heuristic_number_assignment, std::unordered_map<uint64_t
 				}
 				//regardless, we guessed.
 				total_predictions[heuristic_number_assignment]++;
-				
 				return true; //This heuristic worked.
 			}else{
 				//fall MUST HAVE return, so we guess fall
@@ -179,10 +141,8 @@ bool BBlock::call_h(int heuristic_number_assignment, std::unordered_map<uint64_t
 				}
 				//regardless, we guessed.
 				total_predictions[heuristic_number_assignment]++;
-				
 				return true; //This heuristic worked.
 			}
-			
 		}else{
 			return false; //This shows this search was unused.
 		}

@@ -3,6 +3,8 @@
 BBlock::BBlock(){
 	has_conditional_jump = false;
 	has_store = false;
+	has_return = false;
+	has_call = false;
 }
 uint64_t BBlock::getFirstInstructionLocation(){
 	return my_instructions[0].getLocation();
@@ -15,8 +17,18 @@ void BBlock::addInstruction(Instruction what){
 	if(what.isJump() && what.getType() != InsType::JMP){
 		//We have to care about this since it conditionally jumps now.
 		has_conditional_jump = true;
-	}else if(what.getType() == InsType::REP_STOS){
-		has_store = true;
+	}else{
+		switch(what.getType()){
+			case InsType::REP_STOS:
+				has_store = true;
+				break;
+			case InsType::RET:
+				has_return = true;
+				break;
+			case InsType::CALL:
+				has_call = true;
+				break;
+		}
 	}
 }
 void BBlock::setActual(uint64_t what){

@@ -51,6 +51,8 @@ class BBlock{
 		uint64_t my_fall_location; //This is where the block will fall.
 		bool has_conditional_jump; //True if it has a conditional jump.
 		bool has_store; //True if it has a store instruction
+		bool has_call; //True if it has a call instruction
+		bool has_return; //True if it has a return instruction
 		uint64_t actual;
 		
 		
