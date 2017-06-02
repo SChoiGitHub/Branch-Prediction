@@ -10,6 +10,8 @@
 
 #include "../instruction/instruction.h"
 
+
+
 class BBlock{
 	public:
 		//Precondition: None
@@ -68,9 +70,6 @@ class BBlock{
 		bool has_call; //True if it has a call instruction
 		bool has_return; //True if it has a return instruction
 		uint64_t actual; //Where the block actually goes to when it ends.
-		
-		
 };
-
 
 #endif

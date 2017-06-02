@@ -44,6 +44,9 @@ bool BBlock::back_h(int heuristic_number_assignment){
 
 bool BBlock::back_h_back_branches_only(int heuristic_number_assignment){
 	if(has_conditional_jump && my_jump_location < my_instructions.back().getLocation()){
+		//std::cout << this->getFirstInstructionLocation() << '\n'; //Debug
+		
+		
 		//We can jump and the jump location is before the instruction location.
 		//We guess jumping no matter what.
 		if(my_jump_location == actual){

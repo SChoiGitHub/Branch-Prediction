@@ -1,0 +1,26 @@
+
+Block 695:
+  0x00007f8b478af528  ff 0a                dec    (%rdx)[4byte] -> (%rdx)[4byte] 
+  0x00007f8b478af52a  74 16                jo     $0x00009f8b478af542 
+Actual: 9f8b478af542
+
+Block 742:
+  0x00007f8b4787d1e8  e9 33 ff ff ff       jmp    $0x00007f8b4787d120 
+  0x00007f8b4787d120  49 8b 45 08          mov    0x08(%r13)[8byte] -> %rax 
+  0x00007f8b4787d124  48 89 c2             mov    %rax -> %rdx 
+  0x00007f8b4787d127  48 c1 e2 05          shl    $0x0000000000000005 %rdx -> %rdx 
+  0x00007f8b4787d12b  48 85 c0             test   %rax %rax 
+  0x00007f8b4787d12e  49 8d 4c 15 f0       lea    0xfffffff0(%r13,%rdx,1) -> %rcx 
+  0x00007f8b4787d133  74 2a                jl     $0x00009f8b4787d15f 
+Actual: 7f8b4787d135
+
+Block 643:
+  0x00007fd1b83815af  48 8b 09             mov    (%rcx)[8byte] -> %rcx 
+  0x00007fd1b83815b2  48 85 c9             test   %rcx %rcx 
+  0x00007fd1b83815b5  75 b9                jnz    $0x000000d1b8381570 
+Actual: 7fd1b83815b7
+
+Block 747:
+  0x00007f8b31134a38  81 f9 00 01 00 00    cmp    %ecx $0x00000100 
+  0x00007f8b31134a3e  74 8f                jz     $0x0000000000401b1e 
+Actual: 401b1e
